@@ -34,9 +34,9 @@ while True:
     if K[0] == '-' or K[0] == '+':
         if K[0] == '-':
             flag_minus = True
-            K = K.replace('-', '0')
+            K = K.replace('-', '')
     else:
-        K = K.replace('+', '0')
+        K = K.replace('+', '')
     if K.isdigit():
         K = int(K)
         if flag_minus:
