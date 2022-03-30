@@ -55,7 +55,7 @@ try:
 
     # Создаем матрицу А
     A = []
-    for row in range(N):                                      # Заполняем матрицу А случайными числами от -10 до 10 (включительно)
+    for row in range(N):
         subMatrix = []
         for column in range(N):
             subMatrix.append(random.randint(-10, 10))
@@ -66,10 +66,10 @@ try:
     # Создание подматриц B, C, D и E
     submatrix_length = N//2                                                                             #Длина подматрицы
 
-    sub_matrix_B = [A[row][0:submatrix_length] for row in range(submatrix_length + 1)]                  # Создание подматрицы В
-    sub_matrix_C = [A[row][submatrix_length + N % 2: N] for row in range(submatrix_length + 1)]         # Создание подматрицы С
-    sub_matrix_D = [A[row][0: submatrix_length] for row in range(submatrix_length + N % 2, N)]          # Создание подматрицы D
-    sub_matrix_E = [A[row][submatrix_length + N % 2: N] for row in range(submatrix_length + N % 2, N)]  # Создание подматрицы E
+    sub_matrix_B = [A[row][0:submatrix_length] for row in range(submatrix_length + 1)]
+    sub_matrix_C = [A[row][submatrix_length + N % 2: N] for row in range(submatrix_length + 1)]
+    sub_matrix_D = [A[row][0: submatrix_length] for row in range(submatrix_length + N % 2, N)]
+    sub_matrix_E = [A[row][submatrix_length + N % 2: N] for row in range(submatrix_length + N % 2, N)]
     print("\n Матрица B: ")
     matrix_output(submatrix_length, sub_matrix_B)
     print("\n Матрица C: ")
@@ -80,31 +80,32 @@ try:
     matrix_output(submatrix_length, sub_matrix_E)
 
                                                 # Формирование матрицы F
-    main_diagonal = 1                                                                          # 1 - если главная диагональ не входит в диапазон; 0 - если входит
+    main_diagonal = 0                                                                          # 1 - если главная диагональ не входит в диапазон; 0 - если входит
+
     # Подсчет чисел, которые стоят в нечетных столбцах матрицы С и больше К, в области 3
     counter_numbers_greater_than_K = 0                                                         # Количество подходящих чисел
-    for row_submatrix_C in range(submatrix_length//2 + submatrix_length % 2):                 # Цикл перебора строк до середины
-        column_submatrix_C = submatrix_length - 1                                             # индекс последнего столбца (начало третий четверти)
-        while column_submatrix_C > submatrix_length - 1 - row_submatrix_C - 1 + main_diagonal:# Перебираем числа в строке, до главной диагонали
-            if (column_submatrix_C+1) % 2 != 0:                                               # проверка на четность столбца
-                if sub_matrix_C[row_submatrix_C][column_submatrix_C] > K:                     # прверка подходящих чисел в верхних строках
+    for row_submatrix_C in range(submatrix_length//2 + submatrix_length % 2):
+        column_submatrix_C = submatrix_length - 1
+        while column_submatrix_C > submatrix_length - 1 - row_submatrix_C - 1 + main_diagonal:
+            if (column_submatrix_C+1) % 2 != 0:
+                if sub_matrix_C[row_submatrix_C][column_submatrix_C] > K:
                     counter_numbers_greater_than_K += 1
-                if sub_matrix_C[submatrix_length - 1 - row_submatrix_C][column_submatrix_C] > K:    # проверка подходящих чисел в нижних строках (зеркальны верхним)
-                    if submatrix_length - 1 - row_submatrix_C != row_submatrix_C:                   # отбрасываем скрещивающие строки
+                if sub_matrix_C[submatrix_length - 1 - row_submatrix_C][column_submatrix_C] > K:
+                    if submatrix_length - 1 - row_submatrix_C != row_submatrix_C:
                         counter_numbers_greater_than_K += 1
-            else:                                                                             # переход на нечетные столбцы, чтобы пропускать четные
+            else:
                 column_submatrix_C += 1
             column_submatrix_C -= 2
 
     # Произведение чисел в области 2, которые стоят в нечетных столбцах матрицы С
     multiplication_of_numbers = 1                                                                                  # произведение подходящих чисел
-    start_left_column_C = main_diagonal                                                                            # столбцы слева
-    start_right_column_C = submatrix_length - 1 - main_diagonal                                                    # столбцы справа
-    for row_submatrix_C in range(0, submatrix_length // 2 + submatrix_length % 2 - main_diagonal + 1, 2):          # Цикл прохода по четным строкам до середины (т.к нужна 2 четверть)
+    start_left_column_C = main_diagonal
+    start_right_column_C = submatrix_length - 1 - main_diagonal
+    for row_submatrix_C in range(0, submatrix_length // 2 + submatrix_length % 2 - main_diagonal + 1, 2):
         current_left_column_C = start_left_column_C
         current_right_column_C = start_right_column_C
-        while current_left_column_C <= submatrix_length // 2 - int(submatrix_length % 2 == 0):                     # Цикл для прохода чисел с двух концов строки (начиная с главной диагонали) для ускорения программы
-            if abs(multiplication_of_numbers) > counter_numbers_greater_than_K:                                    # прекращаем домножать на реальные числа матрицы, если их произведение уже превысило сумму чисел из 3 четверти
+        while current_left_column_C <= submatrix_length // 2 - int(submatrix_length % 2 == 0):
+            if abs(multiplication_of_numbers) > counter_numbers_greater_than_K:
                 if sub_matrix_C[row_submatrix_C][current_left_column_C] < 0:
                     multiplication_of_numbers *= (-1)
                 elif sub_matrix_C[row_submatrix_C][current_left_column_C] == 0:
@@ -134,12 +135,12 @@ try:
     # Замена в подматрице B первой и третьей четверти: (если выполняется первое условие)
     if counter_numbers_greater_than_K > multiplication_of_numbers:
         flag_swap_matrix_B_1_3 = True
-        for row_submatrix_B in range(submatrix_length // 2 + submatrix_length % 2):                         # перебор строк
-            right_column_submatrix_B = submatrix_length - 1                                                 # начало 3 четверти
-            left_column_submatrix_B = 0                                                                     # начало 1 четверти
-            while right_column_submatrix_B > submatrix_length - 1 - row_submatrix_B - 1 + main_diagonal:    # перебор чисел в строке до главной диагонали
+        for row_submatrix_B in range(submatrix_length // 2 + submatrix_length % 2):
+            right_column_submatrix_B = submatrix_length - 1
+            left_column_submatrix_B = 0
+            while right_column_submatrix_B > submatrix_length - 1 - row_submatrix_B - 1 + main_diagonal:
                 sub_matrix_B[row_submatrix_B][left_column_submatrix_B], sub_matrix_B[row_submatrix_B][right_column_submatrix_B] \
-                    = sub_matrix_B[row_submatrix_B][right_column_submatrix_B], sub_matrix_B[row_submatrix_B][left_column_submatrix_B]       # Симметричная замена 1 и 3 четверти
+                    = sub_matrix_B[row_submatrix_B][right_column_submatrix_B], sub_matrix_B[row_submatrix_B][left_column_submatrix_B]
                 if submatrix_length - 1 - row_submatrix_B != row_submatrix_B:
                     sub_matrix_B[submatrix_length - 1 - row_submatrix_B][left_column_submatrix_B], sub_matrix_B[submatrix_length - 1 - row_submatrix_B][right_column_submatrix_B] \
                         = sub_matrix_B[submatrix_length - 1 - row_submatrix_B][right_column_submatrix_B], sub_matrix_B[submatrix_length - 1 - row_submatrix_B][left_column_submatrix_B]
@@ -147,7 +148,7 @@ try:
                 left_column_submatrix_B += 1
         print("\nОтредактированная матрица B: ")
         matrix_output(submatrix_length, sub_matrix_B)
-    # Замена подматрицы C и E: (если выполняется второе условие)
+    # Замена подматрицы C и E: (если не выполняется первое условие)
     else:
         flag_swap_matrix_E_and_C = True
         sub_matrix_C, sub_matrix_E = sub_matrix_E, sub_matrix_C
