@@ -1,6 +1,7 @@
 import random
 import time
 
+
 # Функция для вывода матрицы
 def matrix_output(row_length, matrix):
     for row in range(row_length):
@@ -80,9 +81,9 @@ try:
     matrix_output(submatrix_length, sub_matrix_E)
 
                                                 # Формирование матрицы F
-    main_diagonal = 0                                                                          # 1 - если главная диагональ не входит в диапазон; 0 - если входит
+    main_diagonal = 1                                                                          # 1 - если главная диагональ не входит в диапазон; 0 - если входит
 
-    # Подсчет чисел, которые стоят в нечетных столбцах матрицы С и больше К, в области 3
+    # Подсчет чисел, которые стоят в нечетных столбцах(отсчет столбцов начинается с первого столбца подматрицы С) области 3 подматрицы С и больше К
     counter_numbers_greater_than_K = 0                                                         # Количество подходящих чисел
     for row_submatrix_C in range(submatrix_length//2 + submatrix_length % 2):
         column_submatrix_C = submatrix_length - 1
@@ -130,7 +131,7 @@ try:
         start_right_column_C -= 2
 
     print("\nКоличество подходящих чисел в третьей четверти:", counter_numbers_greater_than_K)
-    print("Прозведение чисел во 2 четверти:", multiplication_of_numbers)
+    print("Сокращенное прозведение чисел во 2 четверти:", multiplication_of_numbers)
 
     # Замена в подматрице B первой и третьей четверти: (если выполняется первое условие)
     if counter_numbers_greater_than_K > multiplication_of_numbers:
@@ -167,7 +168,7 @@ try:
                 matrix_F[row_matrix_F][left_column_matrix_F] = sub_matrix_B[row_matrix_F][left_column_matrix_F]
             if flag_swap_matrix_E_and_C:                                                        # если выполнилось второе условие
                 matrix_F[row_matrix_F][right_column_matrix_F] = sub_matrix_C[row_matrix_F][left_column_matrix_F]
-                matrix_F[submatrix_length + submatrix_length % 2 + row_matrix_F][right_column_matrix_F] = sub_matrix_E[row_matrix_F][left_column_matrix_F]
+                matrix_F[submatrix_length + N % 2 + row_matrix_F][right_column_matrix_F] = sub_matrix_E[row_matrix_F][left_column_matrix_F]
             left_column_matrix_F += 1
             right_column_matrix_F += 1
     print("\n Матрица F: ")
