@@ -55,12 +55,10 @@ try:
     flag_swap_matrix_E_and_C = False
 
     # Создаем матрицу А
-    A = []
+    A = [[0]*N for row in range(N)]
     for row in range(N):
-        subMatrix = []
         for column in range(N):
-            subMatrix.append(random.randint(-10, 10))
-        A.append(subMatrix)
+            A[row][column] = random.randint(-10, 10)
     print(" Матрица А: ")
     matrix_output(N, A)
 
