@@ -57,26 +57,24 @@ try:
 
     # Создаем матрицу А
     print(" Матрица А: ")
-    A = []
+    A = [[0] * N for row in range(N)]
     for row in range(N):
-        subMatrix = []
         for column in range(N):
-            subMatrix.append(random.randint(-10, 10))
+            A[row][column] = random.randint(-10, 10)
             if (N % 2 == 0) or (N % 2 != 0 and row != N//2):
                 if row < N//2 and column < N//2:
-                    print(Back.GREEN + '{:4}'.format(subMatrix[column]), end='')
+                    print(Back.GREEN + '{:4}'.format(A[row][column]), end='')
                 elif row < N//2 and column > N//2 - int(N % 2 == 0):
-                    print(Back.RED + '{:4}'.format(subMatrix[column]), end='')
+                    print(Back.RED + '{:4}'.format(A[row][column]), end='')
                 elif row > N//2 - int(N % 2 == 0) and column < N//2:
-                    print(Back.YELLOW + '{:4}'.format(subMatrix[column]), end='')
+                    print(Back.YELLOW + '{:4}'.format(A[row][column]), end='')
                 elif row > N//2 - int(N % 2 == 0) and column > N//2 - int(N % 2 == 0):
-                    print(Back.BLUE + '{:4}'.format(subMatrix[column]), end='')
+                    print(Back.BLUE + '{:4}'.format(A[row][column]), end='')
                 else:
-                    print(Style.RESET_ALL + '{:4}'.format(subMatrix[column]), end='')
+                    print(Style.RESET_ALL + '{:4}'.format(A[row][column]), end='')
             else:
-                print('{:4}'.format(subMatrix[column]), end='')
+                print('{:4}'.format(A[row][column]), end='')
         print(Style.RESET_ALL)
-        A.append(subMatrix)
     print(Style.RESET_ALL)
 
     # Создание подматриц B, C, D и E
@@ -104,6 +102,7 @@ try:
             else:
                 column_submatrix_C += 1
             column_submatrix_C -= 2
+
     #Вывод чисел, которые считает программа
     print("3 область в подматрице С (выделена красным):")
     max_column = submatrix_length
