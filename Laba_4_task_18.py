@@ -17,14 +17,16 @@ def multiplication_matrix_and_argument(row_length, matrix, argument):
 
 # Получаем пользовательский ввод:
 while True:
-    N = input("Введите длину матрицы (положительное, целое число, больше 6): ")
+    N = input("Введите длину матрицы (положительное, целое число, в диапазоне от 6 до 1000): ")
     N = N.strip()
     if N.isdigit():
         N = int(N)
-        if N >= 6:
+        if N >= 6 and N <= 1000:
             break
-        else:
+        elif N < 6:
             print("Ошибка. Вы ввели число меньше 6.")
+        else:
+            print("Ошибка вы ввели число больше 1000.")
     else:
         print("Неверный ввод данных.")
 while True:
@@ -73,8 +75,6 @@ try:
     matrix_output(submatrix_length, sub_matrix_B)
     print("\n Матрица C: ")
     matrix_output(submatrix_length, sub_matrix_C)
-    print("\n Матрица D: ")
-    matrix_output(submatrix_length, sub_matrix_D)
     print("\n Матрица E: ")
     matrix_output(submatrix_length, sub_matrix_E)
 
@@ -145,16 +145,12 @@ try:
                         = sub_matrix_B[submatrix_length - 1 - row_submatrix_B][right_column_submatrix_B], sub_matrix_B[submatrix_length - 1 - row_submatrix_B][left_column_submatrix_B]
                 right_column_submatrix_B -= 1
                 left_column_submatrix_B += 1
-        print("\nОтредактированная матрица B: ")
-        matrix_output(submatrix_length, sub_matrix_B)
+        print("Так как произведение чисел во второй области, меньше чем сумма чисел в третий области. Меняем в подматрице В симметрично области 1 и 3.")
     # Замена подматрицы C и E: (если не выполняется первое условие)
     else:
         flag_swap_matrix_E_and_C = True
         sub_matrix_C, sub_matrix_E = sub_matrix_E, sub_matrix_C
-        print("\nОтредактированная матриица C: ")
-        matrix_output(submatrix_length, sub_matrix_C)
-        print("\nОтредактированная матриица E: ")
-        matrix_output(submatrix_length, sub_matrix_E)
+        print("Так как произведение чисел во второй области, больше чем сумма чисел в третий области. Меняем подматрицы С и Е не симметрично.")
 
     # Создание матрицы F:
     matrix_F = [A[row][0:N] for row in range(N)]
@@ -172,7 +168,7 @@ try:
     print("\n Матрица F: ")
     matrix_output(N, matrix_F)
 
-                                                                # Вычисляем выражение:
+                                                             # Вычисляем выражение:
     # произведение матрцы А на К
     multiplication_matrix_and_argument(N, A, K)
     print("\nПроизведение матрицы А и аргумента К:")
@@ -216,3 +212,4 @@ except Exception as mistake:
     print("Извините. Произошел сбой программы. Ошибка:", mistake)
 finish = time.monotonic()
 print("\nВремя работы программы:", finish - start, "sec.")
+
