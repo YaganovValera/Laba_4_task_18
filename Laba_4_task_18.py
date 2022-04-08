@@ -146,6 +146,7 @@ try:
                 right_column_submatrix_B -= 1
                 left_column_submatrix_B += 1
         print("Так как произведение чисел во второй области, меньше чем сумма чисел в третий области. Меняем в подматрице В симметрично области 1 и 3.")
+        matrix_output(submatrix_length, sub_matrix_B)
     # Замена подматрицы C и E: (если не выполняется первое условие)
     else:
         flag_swap_matrix_E_and_C = True
